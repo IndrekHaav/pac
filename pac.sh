@@ -48,7 +48,7 @@ case "$1" in
     install)
         shift
         [ "$#" -gt 0 ] || __fatal "enter a package name"
-        if [ -f "$@" ]; then pacman -U "$@"; else pacman -S "$@"; fi
+        if [ -f "$*" ]; then pacman -U "$*"; else pacman -S "$@"; fi
         ;;
     remove)
         shift
@@ -77,6 +77,5 @@ case "$1" in
         ;;
     *)
         __usage
-        exit 1
         ;;
 esac
