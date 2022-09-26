@@ -59,7 +59,7 @@ case "$1" in
         shift
         if [ "$#" -eq 0 ]; then
             readarray -t pkgs < <(pacman -Qdtq)
-            pacman -Rs "${pkgs[@]}"
+            [ "${#pkgs[@]}" -gt 0 ] && pacman -Rs "${pkgs[@]}"
         else
             pacman -Rs "$@"
         fi
