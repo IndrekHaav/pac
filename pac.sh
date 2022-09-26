@@ -42,7 +42,7 @@ case "$1" in
         shift
         [ "$#" -gt 0 ] || __fatal "enter a package name"
         for package in "$@"; do
-            pacman -Si "$package" 2>/dev/null || pacman -Qi "$package" 2>/dev/null || __error "package '$package' was not found"
+            pacman -Qi "$package" 2>/dev/null || pacman -Si "$package" 2>/dev/null || __error "package '$package' was not found"
         done
         ;;
     install)
