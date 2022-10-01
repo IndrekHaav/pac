@@ -1,3 +1,7 @@
+# 🚧 WIP 🚧
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/IndrekHaav/pac/lint?label=lint)](https://github.com/IndrekHaav/pac/actions/workflows/lint.yml)
+
 # What is this?
 
 This script - `pac.sh` - is a simple [pacman](https://wiki.archlinux.org/title/Pacman) helper for [Arch Linux](https://archlinux.org/) that provides syntax similar to [apt](https://wiki.debian.org/AptCLI). For example, `pac install <package>` instead of `pacman -S <package>`. It can be useful to those who, like me, sometimes forget the proper pacman flags to use.
@@ -40,3 +44,8 @@ Available commands:
     autoremove              Removes all unneeded dependencies
     upgrade, dist-upgrade   Performs a full system upgrade
 ```
+
+# TODO
+
+- make the script POSIX sh-compatible
+- add more apt subcommands (download, depends/rdepends, etc.)
