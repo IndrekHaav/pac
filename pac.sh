@@ -2,12 +2,9 @@
 
 set -eu
 
-RESET="\033[0m"
-RED="\033[1;31m"
-
 __usage() {
-    cat <<EOF
-Usage: $(basename "$0") command
+    cat <<-USAGE
+Usage: $BASH_SOURCE command
 
 Available commands:
     search <string>         Searches for packages matching <string>
@@ -17,65 +14,58 @@ Available commands:
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
     upgrade, dist-upgrade   Performs a full system upgrade
-EOF
+USAGE
     exit
 }
 
-__error() {
-    echo -e "${RED}error:${RESET} $1"
+__out() {
+    [[ $2 == x ]] || (( $2 > 0 )) && {
+        response='Error'
+        exit 1
+    } || printf '[\e[1;3%sm%s\e[0m]: %s' \
+        "${2:-2}" "${response:-Pass}" "$1"
 }
 
-__fatal() {
-    __error "$1"
-    exit 1
-}
+(( $# )) || __usage
 
-[ "$#" -gt 0 ] || __usage
-
-case "$1" in
-    search)
-        shift
-        [ "$#" -eq 1 ] || __fatal "enter a search term"
+case $1 in
+    search) shift
+        (( $# )) || __out "enter a search term" x
         pacman -Ss "$@"
-        ;;
-    show)
-        shift
-        [ "$#" -gt 0 ] || __fatal "enter a package name"
+    ;;
+    show) shift
+        (( $# )) || __out "enter a package name" x
         for package in "$@"; do
-            pacman -Qi "$package" 2>/dev/null || pacman -Si "$package" 2>/dev/null || __error "package '$package' was not found"
+            pacman -Qi "$package" 2>/dev/null || 
+                pacman -Si "$package" 2>/dev/null ||
+                    __out "package '$package' was not found" x
         done
-        ;;
-    install)
-        shift
-        [ "$#" -gt 0 ] || __fatal "enter a package name"
-        if [ -f "$*" ]; then pacman -U "$*"; else pacman -S "$@"; fi
-        ;;
-    remove)
-        shift
-        [ "$#" -gt 0 ] || __fatal "enter a package name"
+    ;;
+    install) shift
+        (( $# )) || __out "enter a package name" x
+        [[ -f $* ]] && pacman -U "$*" || pacman -S "$@"
+    ;;
+    remove) shift
+        (( $# )) || __out "enter a package name" x
         pacman -R "$@"
-        ;;
-    autoremove)
-        shift
-        if [ "$#" -eq 0 ]; then
+    ;;
+    autoremove) shift
+        (( $# )) && {
             readarray -t pkgs < <(pacman -Qdtq)
-            [ "${#pkgs[@]}" -gt 0 ] && pacman -Rs "${pkgs[@]}"
-        else
+            (( "${#pkgs[@]}" )) && pacman -Rs "${pkgs[@]}"
+        } || {
             pacman -Rs "$@"
-        fi
-        ;;
-    update)
-        shift
-        if [ "$#" -eq 0 ]; then
-            __fatal "this command would execute 'pacman -Sy', but partial upgrades are not supported"
-        else
-            __fatal "this command would execute 'pacman -S $*', but partial upgrades are not supported"
-        fi
-        ;;
+        }
+    ;;
+    update) shift
+        (( $# )) &&
+            __out "this command would execute 'pacman -Sy', but partial upgrades are not supported" x ||
+                __out "this command would execute 'pacman -S $*', but partial upgrades are not supported" x
+    ;;
     upgrade|dist-upgrade)
         pacman -Syu
-        ;;
+    ;;
     *)
         __usage
-        ;;
+    ;;
 esac
