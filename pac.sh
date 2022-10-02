@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Author: Indrek Haav
 # Source: https://github.com/IndrekHaav/pac
@@ -25,7 +25,7 @@ EOF
 }
 
 __error() {
-    echo -e "${RED}error:${RESET} $1"
+    printf "${RED}error:${RESET} %s\n" "$1"
 }
 
 __fatal() {
@@ -60,12 +60,9 @@ case "$1" in
         ;;
     autoremove)
         shift
-        if [ "$#" -eq 0 ]; then
-            readarray -t pkgs < <(pacman -Qdtq)
-            [ "${#pkgs[@]}" -gt 0 ] && pacman -Rs "${pkgs[@]}"
-        else
-            pacman -Rs "$@"
-        fi
+        pkgs=${*:-$(pacman -Qdtq)}
+        # shellcheck disable=SC2086
+        [ -n "$pkgs" ] && pacman -Rns $pkgs
         ;;
     update)
         shift
