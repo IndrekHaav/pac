@@ -48,4 +48,4 @@ Available commands:
 # TODO
 
 - make the script POSIX sh-compatible
-- add more apt subcommands (download, depends/rdepends, etc.)
+- check that pacman exists / OS is Arch
