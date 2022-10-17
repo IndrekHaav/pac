@@ -43,9 +43,11 @@ Available commands:
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
     upgrade, dist-upgrade   Performs a full system upgrade
+    depends <package>       Shows a list of dependencies for <package>
+    rdepends <package>      Shows a list of packages that depend on <package>
 ```
 
 # TODO
 
-- add more apt subcommands (download, depends/rdepends, etc.)
+- add more apt subcommands (download, list, etc.)
 - check that pacman exists / OS is Arch

@@ -20,6 +20,8 @@ Available commands:
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
     upgrade, dist-upgrade   Performs a full system upgrade
+    depends <package>       Shows a list of dependencies for <package>
+    rdepends <package>      Shows a list of packages that depend on <package>
 EOF
     exit
 }
@@ -74,6 +76,18 @@ case "$1" in
         ;;
     upgrade|dist-upgrade)
         pacman -Syu
+        ;;
+    depends)
+        shift
+        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        [ "$#" -gt 0 ] || __fatal "enter a package name"
+        pactree -s -d1 -o1 "$@"
+        ;;
+    rdepends)
+        shift
+        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        [ "$#" -gt 0 ] || __fatal "enter a package name"
+        pactree -r -s -d1 -o1 "$@"
         ;;
     *)
         __usage
