@@ -1,6 +1,6 @@
 # 🚧 WIP 🚧
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/IndrekHaav/pac/lint?label=lint)](https://github.com/IndrekHaav/pac/actions/workflows/lint.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IndrekHaav/pac/lint.yml?branch=main&label=lint)](https://github.com/IndrekHaav/pac/actions/workflows/lint.yml)
 
 # What is this?
 
