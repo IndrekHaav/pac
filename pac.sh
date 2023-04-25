@@ -95,18 +95,10 @@ case "$1" in
     list)
         shift
         case "${1-}" in
-            --installed)
-                pacman -Q
-                ;;
-            --upgradable)
-                pacman -Qu
-                ;;
-            --all)
-                pacman -Sl
-                ;;
-            *)
-                __usage
-                ;;
+            --installed) pacman -Q ;;
+            --upgradable) pacman -Qu ;;
+            --all) pacman -Sl ;;
+            *) __usage ;;
         esac
         ;;
     *)
