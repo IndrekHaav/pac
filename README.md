@@ -42,6 +42,7 @@ Available commands:
     remove <package>        Removes <package>
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
+    clean                   Removes unneeded cached packages and sync database
     upgrade, dist-upgrade   Performs a full system upgrade
     list --installed        Lists all installed packages
          --upgradable       Lists all upgradable packages
