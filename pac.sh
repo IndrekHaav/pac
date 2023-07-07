@@ -22,6 +22,7 @@ Available commands:
     clean                   Removes unneeded cached packages and sync database
     upgrade, dist-upgrade   Performs a full system upgrade
     list --installed        Lists all installed packages
+         --manual           Lists all manually installed packages
          --upgradable       Lists all upgradable packages
          --all              Lists all available packages
     depends <package>       Shows a list of dependencies for <package>
@@ -97,6 +98,7 @@ case "$1" in
         shift
         case "${1-}" in
             --installed) pacman -Q ;;
+            --manual) pacman -Qm ;;
             --upgradable) pacman -Qu ;;
             --all) pacman -Sl ;;
             *) __usage ;;
