@@ -79,7 +79,7 @@ case "$1" in
             __fatal "this command would execute 'pacman -S $*', but partial upgrades are not supported"
         fi
         ;;
-    upgrade|dist-upgrade)
+    upgrade|dist-upgrade|full-upgrade)
         pacman -Syu
         ;;
     depends)
