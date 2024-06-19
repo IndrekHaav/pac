@@ -27,6 +27,11 @@ $ ln -s $(realpath pac/pac.sh) ~/.local/bin/pac
 
 If you happen to have a binary called `pac` already installed (check with `which pac`), then just use another name for the symlink.
 
+## Optional dependencies
+
+ - `pacman-contrib` (for listing dependencies)
+ - `curl` (for downloading packages)
+
 # How to use?
 
 Run `pac` with no arguments to get an overview of the supported commands:
