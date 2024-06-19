@@ -15,18 +15,18 @@ Usage: $(basename "$0") command
 Available commands:
     search <string>         Searches for packages matching <string>
     show <package>          Returns information about <package>
-    install <package>       Installs <package>
-    remove <package>        Removes <package>
-    autoremove <package>    Removes <package> and all its unneeded dependencies
-    autoremove              Removes all unneeded dependencies
-    clean                   Removes unneeded cached packages and sync database
-    upgrade, dist-upgrade   Performs a full system upgrade
     list --installed        Lists all installed packages
          --manual           Lists all manually installed packages
          --upgradable       Lists all upgradable packages
          --all              Lists all available packages
     depends <package>       Shows a list of dependencies for <package>
     rdepends <package>      Shows a list of packages that depend on <package>
+    install <package>       Installs <package>
+    remove <package>        Removes <package>
+    autoremove <package>    Removes <package> and all its unneeded dependencies
+    autoremove              Removes all unneeded dependencies
+    clean                   Removes unneeded cached packages and sync database
+    upgrade, dist-upgrade   Performs a full system upgrade
 EOF
     exit
 }
@@ -55,6 +55,28 @@ case "$1" in
             pacman -Qi "$package" 2>/dev/null || pacman -Si "$package" 2>/dev/null || __error "package '$package' was not found"
         done
         ;;
+    list)
+        shift
+        case "${1-}" in
+            --installed) pacman -Q ;;
+            --manual) pacman -Qm ;;
+            --upgradable) pacman -Qu ;;
+            --all) pacman -Sl ;;
+            *) __usage ;;
+        esac
+        ;;
+    depends)
+        shift
+        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        [ "$#" -gt 0 ] || __fatal "enter a package name"
+        pactree -s -d1 -o1 "$@"
+        ;;
+    rdepends)
+        shift
+        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        [ "$#" -gt 0 ] || __fatal "enter a package name"
+        pactree -r -s -d1 -o1 "$@"
+        ;;
     install)
         shift
         [ "$#" -gt 0 ] || __fatal "enter a package name"
@@ -81,28 +103,6 @@ case "$1" in
         ;;
     upgrade|dist-upgrade|full-upgrade)
         pacman -Syu
-        ;;
-    depends)
-        shift
-        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
-        [ "$#" -gt 0 ] || __fatal "enter a package name"
-        pactree -s -d1 -o1 "$@"
-        ;;
-    rdepends)
-        shift
-        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
-        [ "$#" -gt 0 ] || __fatal "enter a package name"
-        pactree -r -s -d1 -o1 "$@"
-        ;;
-    list)
-        shift
-        case "${1-}" in
-            --installed) pacman -Q ;;
-            --manual) pacman -Qm ;;
-            --upgradable) pacman -Qu ;;
-            --all) pacman -Sl ;;
-            *) __usage ;;
-        esac
         ;;
     clean)
         pacman -Sc

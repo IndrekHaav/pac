@@ -38,18 +38,18 @@ Usage: pac command
 Available commands:
     search <string>         Searches for packages matching <string>
     show <package>          Returns information about <package>
-    install <package>       Installs <package>
-    remove <package>        Removes <package>
-    autoremove <package>    Removes <package> and all its unneeded dependencies
-    autoremove              Removes all unneeded dependencies
-    clean                   Removes unneeded cached packages and sync database
-    upgrade, dist-upgrade   Performs a full system upgrade
     list --installed        Lists all installed packages
          --manual           Lists all manually installed packages
          --upgradable       Lists all upgradable packages
          --all              Lists all available packages
     depends <package>       Shows a list of dependencies for <package>
     rdepends <package>      Shows a list of packages that depend on <package>
+    install <package>       Installs <package>
+    remove <package>        Removes <package>
+    autoremove <package>    Removes <package> and all its unneeded dependencies
+    autoremove              Removes all unneeded dependencies
+    clean                   Removes unneeded cached packages and sync database
+    upgrade, dist-upgrade   Performs a full system upgrade
 ```
 
 # TODO
