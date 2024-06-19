@@ -45,6 +45,7 @@ Available commands:
     depends <package>       Shows a list of dependencies for <package>
     rdepends <package>      Shows a list of packages that depend on <package>
     install <package>       Installs <package>
+    download <package>      Downloads <package> to current directory
     remove <package>        Removes <package>
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies

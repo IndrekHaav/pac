@@ -22,6 +22,7 @@ Available commands:
     depends <package>       Shows a list of dependencies for <package>
     rdepends <package>      Shows a list of packages that depend on <package>
     install <package>       Installs <package>
+    download <package>      Downloads <package> to current directory
     remove <package>        Removes <package>
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
@@ -40,13 +41,17 @@ __fatal() {
     exit 1
 }
 
+__require() {
+    command -v "$1" >/dev/null || __fatal "install ${2:-$1} to use this functionality"
+}
+
 [ "$#" -gt 0 ] || __usage
 
 case "$1" in
     search)
         shift
         [ "$#" -eq 1 ] || __fatal "enter a search term"
-        pacman -Ss "$@"
+        pacman -Ss "$*"
         ;;
     show)
         shift
@@ -67,13 +72,13 @@ case "$1" in
         ;;
     depends)
         shift
-        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        __require pactree pacman-contrib
         [ "$#" -gt 0 ] || __fatal "enter a package name"
         pactree -s -d1 -o1 "$@"
         ;;
     rdepends)
         shift
-        command -v pactree > /dev/null || __fatal "install pacman-contrib to use this functionality"
+        __require pactree pacman-contrib
         [ "$#" -gt 0 ] || __fatal "enter a package name"
         pactree -r -s -d1 -o1 "$@"
         ;;
@@ -81,6 +86,12 @@ case "$1" in
         shift
         [ "$#" -gt 0 ] || __fatal "enter a package name"
         if [ -f "$*" ]; then pacman -U "$*"; else pacman -S "$@"; fi
+        ;;
+    download)
+        shift
+        __require curl
+        [ "$#" -eq 1 ] || __fatal "enter a package name"
+        curl -O "$(pacman -Sp "$*")"
         ;;
     remove)
         shift
