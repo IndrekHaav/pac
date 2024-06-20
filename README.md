@@ -6,14 +6,14 @@
 
 This script - `pac.sh` - is a simple [pacman](https://wiki.archlinux.org/title/Pacman) helper for [Arch Linux](https://archlinux.org/) that provides syntax similar to [apt](https://wiki.debian.org/AptCLI). For example, `pac install <package>` instead of `pacman -S <package>`. It can be useful to those who, like me, sometimes forget the proper pacman flags to use.
 
-The script implements a subset of apt commands and translates them to [corresponding pacman invocations](https://wiki.archlinux.org/title/Pacman/Rosetta).
+The script implements a subset of apt commands (as well as a few apt-inspired commands) and translates them to [corresponding pacman invocations](https://wiki.archlinux.org/title/Pacman/Rosetta).
 
 ## What this is not
 
 This script is **not**:
 
  - a full-featured pacman wrapper
- - a port of `apt` to Arch
+ - a port of apt to Arch
  - a replacement for AUR helpers like yay
 
 # How to install?
@@ -51,6 +51,7 @@ Available commands:
     rdepends <package>      Shows a list of packages that depend on <package>
     install <package>       Installs <package>
     download <package>      Downloads <package> to current directory
+    cache <package>         Downloads <package> to pacman cache
     remove <package>        Removes <package>
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies

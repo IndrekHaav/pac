@@ -23,6 +23,7 @@ Available commands:
     rdepends <package>      Shows a list of packages that depend on <package>
     install <package>       Installs <package>
     download <package>      Downloads <package> to current directory
+    cache <package>         Downloads <package> to pacman cache
     remove <package>        Removes <package>
     autoremove <package>    Removes <package> and all its unneeded dependencies
     autoremove              Removes all unneeded dependencies
@@ -92,6 +93,11 @@ case "$1" in
         __require curl
         [ "$#" -eq 1 ] || __fatal "enter a package name"
         curl -O "$(pacman -Sp "$*")"
+        ;;
+    cache)
+        shift
+        [ "$#" -eq 1 ] || __fatal "enter a package name"
+        pacman -Sw "$*"
         ;;
     remove)
         shift
