@@ -2,6 +2,8 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/IndrekHaav/pac/lint.yml?branch=main&label=lint)](https://github.com/IndrekHaav/pac/actions/workflows/lint.yml)
 
+**Repository moved to: https://codeberg.org/indrek/pac**
+
 # What is this?
 
 This script - `pac.sh` - is a simple [pacman](https://wiki.archlinux.org/title/Pacman) helper for [Arch Linux](https://archlinux.org/) that provides syntax similar to [apt](https://wiki.debian.org/AptCLI). For example, `pac install <package>` instead of `pacman -S <package>`. It can be useful to those who, like me, sometimes forget the proper pacman flags to use.
